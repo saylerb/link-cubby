@@ -8,10 +8,11 @@ FactoryGirl.define do
   end
 
   sequence(:title) { |n| "#{n} Link Title" }
+  sequence(:url) { |n| "http://www.turing.io/#{n}" }
 
   factory :link do
     title 
-    url "https://www.turing.io/"
+    url 
     user
   end
 end
