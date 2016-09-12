@@ -14,17 +14,25 @@ RSpec.feature "user views links", js: true do
 
       visit root_path
 
-      within "table" do
+      within "#table-body" do
         user_links.each do |link|
-          expect(page).to have_content(link.title)
-          expect(page).to have_content(link.body)
-          expect(page).to have_content("false")
+          within "#title-#{link.id}" do 
+           expect(page).to have_content(link.title)
+          end
+
+          within "#url-#{link.id}" do 
+            expect(page).to have_content(link.url)
+          end
+
+          within "#read-#{link.id}" do 
+            expect(page).to have_content("false")
+          end
         end
 
         other_links.each do |link|
-          expect(page).to have_content(link.title)
-          expect(page).to have_content(link.body)
-          expect(page).to have_content("false")
+          expect(page).to_not have_css("#title-#{link.id}")
+          expect(page).to_not have_css("#url-#{link.id}")
+          expect(page).to_not have_css("#read-#{link.id}")
         end
       end
     end
@@ -34,15 +42,7 @@ RSpec.feature "user views links", js: true do
     scenario "and cannot see links" do
       visit root_path
 
-      all_links = user_links + other_links
-
-      within "table" do
-        all_links.each do |link|
-          expect(page).to have_content(link.title)
-          expect(page).to have_content(link.body)
-          expect(page).to have_content("false")
-        end
-      end
+      expect(current_path).to eq(login_path)
     end
   end
 end
