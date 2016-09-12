@@ -22,9 +22,16 @@ class Api::V1::LinksController < Api::V1::ApiBaseController
     end
   end
 
+  def update
+    link = Link.update(params[:id], link_params)
+    render json: link, status: 200
+  end
+
+
+
   private
 
   def link_params
-    params.require(:link).permit(:title, :url)
+    params.require(:link).permit(:title, :url, :read)
   end
 end
