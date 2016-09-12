@@ -1,0 +1,21 @@
+<div class="col-md-4 col-md-offset-4 well">
+  <div class="signup-form form-group">
+    <h4>Create an Account:  </h4>
+    <hr>
+    <%= form_for @user do |f| %>
+        <h4>
+          <%= f.label :email, "Email" %>
+          <%= f.text_field :email, class: "form-control" %>
+        </h4>
+        <h4>
+          <%= f.label :password, "Password" %>
+          <%= f.password_field :password, class: "form-control" %>
+        </h4>
+        <h4>
+          <%= f.label :password_confirmation, "Password Confirmation" %>
+          <%= f.password_field :password_confirmation, class: "form-control" %>
+        </h4>
+        <%= f.submit "Sign Up", class: "btn btn-primary" %>
+      </div>
+    <% end %>
+</div>
