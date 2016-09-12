@@ -3,6 +3,7 @@ $(document).ready(() => {
     getLinks()
     createLink()
     updateStatus()
+    updateLinkText()
   }())
 })
 
@@ -30,8 +31,8 @@ function createLink() {
         clearFields()
       },
       error: error => {
-        appendErrorRow(error)
         console.log(error)
+        appendErrorRow(error.responseText)
       }
     })
   })
@@ -40,20 +41,25 @@ function createLink() {
 function clearFields() {
   $("#title-field").val("")
   $("#url-field").val("")
-  $('bg-danger').val("")
+  $('.bg-danger').remove()
 }
 
 function appendErrorRow(error) {
-  $("#table-body").prepend(`<tr class='bg-danger'><td colspan='3'>${error.responseText}</td></tr>`)
+  if (($('.bg-danger').length) < 1 ) {
+    $("#table-body").prepend(`<tr class='bg-danger'><td colspan='4'>${error}</td></tr>`)
+  }
 }
 
 function appendRow(link) {
+  let style = link.read ? 'bg-success' : ''
+  let buttonText = link.read ? 'Mark as Unread' : 'Mark as Read'
+
   $("#table-body").prepend(
-    `<tr id='link-${link.id}'>
+    `<tr id='link-${link.id}' class=${style}>
       <td contenteditable='true' class='title input' id='title-${link.id}'>${link.title}</td>
       <td contenteditable='true' class='input' id='url-${link.id}'>${link.url}</td>
       <td id='read-${link.id}'>${link.read}</td>
-      <td id='update-status-${link.id}'><button type='button' class='update-status btn btn-sm'>Mark as Read</button></td>
+      <td id='update-status-${link.id}'><button type='button' class='update-status btn btn-sm'>${buttonText}</button></td>
     </tr>`
   )
 }
@@ -82,6 +88,7 @@ function toggleButtonText(status) {
 }
 
 function updateAjax(target, edit_data, linkID) {
+  clearFields()
 
   $.ajax({
     url: "/api/v1/links/" + linkID,
@@ -94,5 +101,35 @@ function updateAjax(target, edit_data, linkID) {
     error: error => {
       console.log(error)
     }
+  })
+}
+
+function updateLinkText() {
+
+  $("#links-table").on('blur', '.input', e => {
+    let linkID = e.currentTarget.id
+    let num = linkID.replace(/^\D+/g, "")
+
+    let titleID = "#title-" + num
+    let urlID = "#url-" + num
+
+    let edit_data = { link: { title: $(titleID).text(), url: $(urlID).text() } }
+
+    $.ajax({
+      url: "/api/v1/links/" + num,
+      type: "PATCH",
+      dataType: "JSON",
+      data: edit_data,
+      success: response => {
+        $(titleID).text(response.title)
+        $(urlID).text(response.url)
+        clearFields()
+      },
+      error: error => {
+        appendErrorRow(error.responseJSON.errors)
+        $(titleID).text(error.responseJSON.link.title)
+        $(urlID).text(error.responseJSON.link.url)
+      }
+    })
   })
 }

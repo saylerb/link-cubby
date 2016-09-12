@@ -23,8 +23,14 @@ class Api::V1::LinksController < Api::V1::ApiBaseController
   end
 
   def update
-    link = Link.update(params[:id], link_params)
-    render json: link, status: 200
+    original_link = Link.find(params[:id])
+
+    updated_link = Link.update(params[:id], link_params)
+    if updated_link.valid?
+      render json: updated_link, status: 200
+    else
+      render json: { errors: updated_link.errors.full_messages.join(", "), link: original_link }, status: 422
+    end
   end
 
   private
