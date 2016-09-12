@@ -74,6 +74,7 @@ function updateStatus() {
 function toggleReadText(target, status) {
   $(target).parent().prev().text(status)
   $(target).text(toggleButtonText(status))
+  $(target).parent().parent().toggleClass('bg-success')
 }
 
 function toggleButtonText(status) {
