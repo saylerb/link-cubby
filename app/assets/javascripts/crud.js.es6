@@ -29,6 +29,7 @@ function createIdea() {
         clearFields()
       },
       error: error => {
+        appendErrorRow(error)
         console.log(error)
       }
     })
@@ -38,6 +39,11 @@ function createIdea() {
 function clearFields() {
   $("#title-field").val("")
   $("#url-field").val("")
+  $('bg-danger').val("")
+}
+
+function appendErrorRow(error) {
+  $("#table-body").prepend(`<tr class='bg-danger'><td colspan='3'>${error.responseText}</td></tr>`)
 }
 
 function appendRow(link) {

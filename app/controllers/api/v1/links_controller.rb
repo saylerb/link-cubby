@@ -15,7 +15,7 @@ class Api::V1::LinksController < Api::V1::ApiBaseController
       if link.save
         render json: link, status: 201
       else
-        render json: link.errors, status: 422
+        render json: link.errors.full_messages.join(", "), status: 422
       end
     else
       render json: { errors: "Must be logged in" }, status: 422
