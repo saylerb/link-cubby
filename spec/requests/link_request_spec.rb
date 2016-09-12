@@ -15,16 +15,14 @@ RSpec.describe "link endpoint" do
 
       expect(response).to be_success
 
-      link1_data, link2_data = data.first, data.last
+      link1_data, link2_data = data.last, data.first
 
       expect(link1_data.length).to eq(4)
-      expect(link1_data[:id]).to eq(link1.id)
       expect(link1_data[:title]).to eq(link1.title)
       expect(link1_data[:url]).to eq(link1.url)
       expect(link1_data[:read]).to eq(false)
 
       expect(link2_data.length).to eq(4)
-      expect(link2_data[:id]).to eq(link2.id)
       expect(link2_data[:title]).to eq(link2.title)
       expect(link2_data[:url]).to eq(link2.url)
       expect(link2_data[:read]).to eq(false)
