@@ -27,8 +27,6 @@ class Api::V1::LinksController < Api::V1::ApiBaseController
     render json: link, status: 200
   end
 
-
-
   private
 
   def link_params

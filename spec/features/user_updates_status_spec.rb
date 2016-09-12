@@ -16,6 +16,16 @@ RSpec.feature "update link status", js: true do
 
     within "#update-status-#{link.id}" do
       expect(page).to have_content("Mark as Read")
+
+      click_on "Mark as Read"
+    end
+
+    within "#read-#{link.id}" do
+      expect(page).to have_content("true")
+    end
+
+    within "#update-status-#{link.id}" do
+      expect(page).to have_content("Mark as Unread")
     end
   end
 end
