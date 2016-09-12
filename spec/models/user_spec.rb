@@ -19,4 +19,8 @@ RSpec.describe User, type: :model do
     it { expect(user2).to validate_presence_of(:password) }
     it { expect(user2).to validate_confirmation_of(:password) }
   end
+
+  it "has many links" do
+    expect(user1).to have_many(:links)
+  end
 end
