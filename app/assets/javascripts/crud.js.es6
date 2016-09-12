@@ -4,6 +4,7 @@ $(document).ready(() => {
     createLink()
     updateStatus()
     updateLinkText()
+    search()
   }())
 })
 
@@ -56,10 +57,10 @@ function appendRow(link) {
 
   $("#table-body").prepend(
     `<tr id='link-${link.id}' class=${style}>
-      <td contenteditable='true' class='title input' id='title-${link.id}'>${link.title}</td>
-      <td contenteditable='true' class='input' id='url-${link.id}'>${link.url}</td>
-      <td id='read-${link.id}'>${link.read}</td>
-      <td id='update-status-${link.id}'><button type='button' class='update-status btn btn-sm'>${buttonText}</button></td>
+      <td contenteditable='true' class='title input searchable' id='title-${link.id}'>${link.title}</td>
+      <td contenteditable='true' class='input searchable' id='url-${link.id}'>${link.url}</td>
+      <td id='read-${link.id}' class='status'>${link.read}</td>
+      <td id='update-status-${link.id}'><button type='button' class='update-status btn btn-sm searchable'>${buttonText}</button></td>
     </tr>`
   )
 }
@@ -131,5 +132,39 @@ function updateLinkText() {
         $(urlID).text(error.responseJSON.link.url)
       }
     })
+  })
+}
+
+
+function search(){
+  $("#search-links").on("keyup", e => {
+    let query = e.target.value.toLowerCase()
+
+    let links = $("#table-body").children('tr')
+
+    links.hide()
+
+    if (query === 'read' || query === 'unread') {
+      let statusQuery = query === 'read' ? 'true' : 'false'
+
+      let matches = links.filter((index, link) => {
+      return $(link)
+          .children('.status')
+          .text()
+          .toLowerCase()
+          .includes(statusQuery)
+      })
+      matches.show()
+
+    } else {
+      let matches = links.filter((index, link) => {
+        return $(link)
+          .children('.searchable')
+          .text()
+          .toLowerCase()
+          .includes(query)
+      })
+      matches.show()
+    }
   })
 }
