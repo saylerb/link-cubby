@@ -5,9 +5,7 @@ RSpec.feature "create new link", js: true do
     scenario "cannot see the new link form" do
       visit root_path
 
-      expect(page).to_not have_css(".form-group")
-      expect(page).to_not have_css("#title-field")
-      expect(page).to_not have_css("#url-field")
+      expect(page).to_not have_css("#new-link")
     end
   end
 
@@ -33,7 +31,7 @@ RSpec.feature "create new link", js: true do
         click_on "Save"
       end
 
-      within "table" do
+      within "#links-table" do
         expect(page).to have_content("Stack Overflow")
         expect(page).to have_content("http://stackoverflow.com/")
       end
