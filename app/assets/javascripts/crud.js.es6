@@ -30,6 +30,7 @@ function createLink() {
       success: response => {
         appendRow(response)
         clearFields()
+        $('.bg-danger').remove()
       },
       error: error => {
         console.log(error)
@@ -42,7 +43,6 @@ function createLink() {
 function clearFields() {
   $("#title-field").val("")
   $("#url-field").val("")
-  $('.bg-danger').remove()
 }
 
 function appendErrorRow(error) {
@@ -89,7 +89,6 @@ function toggleButtonText(status) {
 }
 
 function updateAjax(target, edit_data, linkID) {
-  clearFields()
 
   $.ajax({
     url: "/api/v1/links/" + linkID,
@@ -98,6 +97,7 @@ function updateAjax(target, edit_data, linkID) {
     data: edit_data,
     success: response => {
       toggleReadText(target, response.read)
+      clearFields()
     },
     error: error => {
       console.log(error)
@@ -124,7 +124,7 @@ function updateLinkText() {
       success: response => {
         $(titleID).text(response.title)
         $(urlID).text(response.url)
-        clearFields()
+        $('.bg-danger').remove()
       },
       error: error => {
         appendErrorRow(error.responseJSON.errors)
