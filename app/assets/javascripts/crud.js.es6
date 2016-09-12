@@ -52,6 +52,7 @@ function appendRow(link) {
       <td contenteditable='true' class='title input' id='title-${link.id}'>${link.title}</td>
       <td contenteditable='true' class='input' id='url-${link.id}'>${link.url}</td>
       <td id='read-${link.id}'>${link.read}</td>
+      <td id='update-status-${link.id}'><button type='button' class='btn btn-sm'>Mark as Read</button></td>
     </tr>`
   )
 }
