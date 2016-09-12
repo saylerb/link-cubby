@@ -1,9 +1,14 @@
-RSpec.describe "link endpoint" do
-  context "retrieve link information" do
-    let!(:link1) { create(:link) }
-    let!(:link2) { create(:link) }
+require 'rails_helper'
 
-    it "returns the information for all links" do
+RSpec.describe "link endpoint" do
+  let!(:user) { create(:user) }
+  let!(:link1) { create(:link, user: user) }
+  let!(:link2) { create(:link, user: user) }
+
+  context "as authenticated user" do
+    it "returns the information for the user's links" do
+      allow_any_instance_of(ApplicationController).to receive(:current_user).and_return(user)
+
       get "/api/v1/links"
 
       data = JSON.parse(response.body, symbolize_names: :true )
@@ -25,4 +30,13 @@ RSpec.describe "link endpoint" do
       expect(link2_data[:read]).to eq(false)
     end
   end
+
+  context "as unauthenticated user" do
+    it "should not return links" do
+      get "/api/v1/links"
+
+      expect(response).to_not be_success
+    end
+  end
+
 end
