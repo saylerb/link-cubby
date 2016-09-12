@@ -1,6 +1,7 @@
 $(document).ready(() => {
   (function listenForCrud() {
     getLinks()
+    createIdea()
   }())
 })
 
@@ -11,6 +12,32 @@ function getLinks() {
     .then(response => response.json())
     .then(response => response.forEach(link => appendRow(link)))
     .catch(err => console.log(err))
+}
+
+function createIdea() {
+  $("#submit-link").on('click', e => {
+    e.preventDefault()
+    var newData = $("#new-link").serialize()
+
+    $.ajax({
+      url: "/api/v1/links",
+      type: "POST",
+      dataType: "JSON",
+      data: newData,
+      success: response => {
+        appendRow(response)
+        clearFields()
+      },
+      error: error => {
+        console.log(error)
+      }
+    })
+  })
+}
+
+function clearFields() {
+  $("#title-field").val("")
+  $("#url-field").val("")
 }
 
 function appendRow(link) {
