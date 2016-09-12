@@ -6,4 +6,13 @@ FactoryGirl.define do
     password "password"
     password_confirmation "password"
   end
+
+  sequence(:title) { |n| "#{n} Link Title" }
+  sequence(:url) { |n| "http://www.turing.io/#{n}" }
+
+  factory :link do
+    title 
+    url 
+    user
+  end
 end

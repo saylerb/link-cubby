@@ -6,4 +6,10 @@ Rails.application.routes.draw do
   get '/login', to: 'sessions#new'
   post '/login', to: 'sessions#create'
   delete '/login', to: 'sessions#destroy'
+
+  namespace :api, defaults: { format: :json } do
+    namespace :v1 do
+      resources :links, only: [:index, :create]
+    end
+  end
 end

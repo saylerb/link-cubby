@@ -13,6 +13,7 @@ gem 'active_model_serializers'
 gem "sprockets"
 gem "sprockets-es6", require: 'sprockets/es6'
 gem 'bootstrap-sass'
+gem "validate_url"
 
 group :development, :test do
   gem 'byebug', platform: :mri
