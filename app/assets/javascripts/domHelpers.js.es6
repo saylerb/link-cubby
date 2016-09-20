@@ -18,7 +18,16 @@ function appendRow(link) {
       <td contenteditable='true' class='title input searchable' id='title-${link.id}'>${link.title}</td>
       <td contenteditable='true' class='input searchable' id='url-${link.id}'>${link.url}</td>
       <td id='read-${link.id}' class='status'>${link.read}</td>
-      <td id='update-status-${link.id}'><button type='button' class='update-status btn btn-sm searchable'>${buttonText}</button></td>
+      <td id='update-status-${link.id}'>
+        <button type='button' class='update-status btn btn-sm btn-primary searchable'>${buttonText}</button>
+      </td>
+      <td id='delete-${link.id}'>
+        <button id='${link.id}' type='button' class='delete btn btn-sm btn-danger'>Delete</button>
+      </td>
     </tr>`
   )
+}
+
+function removeRow(link_id) {
+  $(`#link-${link_id}`).remove()
 }

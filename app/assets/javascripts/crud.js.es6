@@ -4,6 +4,7 @@ $(document).ready(() => {
     createLink()
     updateStatus()
     updateLinkText()
+    deleteLink()
     search()
   }())
 })
