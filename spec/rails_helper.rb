@@ -22,3 +22,10 @@ RSpec.configure do |config|
   config.infer_spec_type_from_file_location!
   config.filter_rails_from_backtrace!
 end
+
+def create_and_authenticate_user
+  user = create(:user)
+  allow_any_instance_of(ApplicationController).to receive(:current_user)
+    .and_return(user)
+  return user
+end
