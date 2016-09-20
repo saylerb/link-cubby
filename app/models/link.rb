@@ -3,5 +3,7 @@ class Link < ApplicationRecord
 
   default_scope { order('lower(title) DESC') }
 
+  validates :title, presence: true
   validates :url, :url => true
+  validates :url, presence: true
 end
