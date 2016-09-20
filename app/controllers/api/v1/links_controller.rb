@@ -33,6 +33,10 @@ class Api::V1::LinksController < Api::V1::ApiBaseController
     end
   end
 
+  def destroy
+    Link.find(params[:id]).destroy
+  end
+
   private
 
   def link_params
