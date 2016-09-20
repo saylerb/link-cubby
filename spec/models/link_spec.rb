@@ -19,4 +19,9 @@ RSpec.describe Link, type: :model do
   describe "belongs to a user" do
     it { expect(link).to belong_to(:user) }
   end
+
+  describe "validates for correct attributes" do
+    it { should validate_presence_of(:title) }
+    it { should validate_presence_of(:url) }
+  end
 end
