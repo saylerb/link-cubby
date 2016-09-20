@@ -11,7 +11,7 @@ RSpec.feature "create new link", js: true do
 
   context "authenticated user" do
     scenario "can see two text boxes to input a new idea" do
-      authenticate_user
+      create_and_authenticate_user
 
       visit root_path
 
@@ -25,7 +25,7 @@ RSpec.feature "create new link", js: true do
     end
 
     scenario "can enter a link with valid attributes" do
-      authenticate_user
+      create_and_authenticate_user
 
       visit root_path
 
@@ -42,7 +42,7 @@ RSpec.feature "create new link", js: true do
     end
 
     scenario "should not be able to add a link without a title" do
-      authenticate_user
+      create_and_authenticate_user
 
       visit root_path
 
@@ -58,7 +58,7 @@ RSpec.feature "create new link", js: true do
     end
 
     scenario "should not be able to add a link without a URL" do
-      authenticate_user
+      create_and_authenticate_user
 
       visit root_path
 
@@ -73,12 +73,4 @@ RSpec.feature "create new link", js: true do
       end
     end
   end
-end
-
-private
-
-def authenticate_user
-  user = create(:user)
-  allow_any_instance_of(ApplicationController).to receive(:current_user)
-    .and_return(user)
 end
