@@ -8,29 +8,6 @@ $(document).ready(() => {
   }())
 })
 
-function createLink() {
-  $("#submit-link").on('click', e => {
-    e.preventDefault()
-    var newData = $("#new-link").serialize()
-
-    $.ajax({
-      url: "/api/v1/links",
-      type: "POST",
-      dataType: "JSON",
-      data: newData,
-      success: response => {
-        appendRow(response)
-        clearFields()
-        $('.bg-danger').remove()
-      },
-      error: error => {
-        console.log(error)
-        appendErrorRow(error.responseText)
-      }
-    })
-  })
-}
-
 function clearFields() {
   $("#title-field").val("")
   $("#url-field").val("")
