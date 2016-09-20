@@ -31,3 +31,13 @@ function appendRow(link) {
 function removeRow(link_id) {
   $(`#link-${link_id}`).remove()
 }
+
+function toggleReadText(target, status) {
+  $(target).parent().prev().text(status)
+  $(target).text(toggleButtonText(status))
+  $(target).parent().parent().toggleClass('bg-success')
+}
+
+function toggleButtonText(status) {
+  return status ? "Mark as Unread" : "Mark as Read"
+}
