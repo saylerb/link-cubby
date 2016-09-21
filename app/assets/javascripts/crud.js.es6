@@ -6,5 +6,7 @@ $(document).ready(() => {
     updateLinkAttributes()
     deleteLink()
     search()
+    getSortedLinksByTitle()
+    getSortedLinksByURL()
   }())
 })

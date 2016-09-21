@@ -14,7 +14,7 @@ function appendRow(link) {
   let buttonText = link.read ? 'Mark as Unread' : 'Mark as Read'
 
   $("#table-body").prepend(
-    `<tr id='link-${link.id}' class=${style}>
+    `<tr id='link-${link.id}' class='${style} link-row'>
       <td contenteditable='true' class='title input searchable' id='title-${link.id}'>${link.title}</td>
       <td contenteditable='true' class='input searchable' id='url-${link.id}'>${link.url}</td>
       <td id='read-${link.id}' class='status'>${link.read}</td>
