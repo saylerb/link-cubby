@@ -1,7 +1,9 @@
 class Link < ApplicationRecord
   belongs_to :user
 
-  default_scope { order('lower(title) DESC') }
+  scope :sort_by_params, -> (user, attribute, direction) {
+    user.links.order("lower(#{attribute}) #{direction}")
+  }
 
   validates :title, presence: true
   validates :url, :url => true

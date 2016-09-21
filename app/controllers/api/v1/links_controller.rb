@@ -1,7 +1,11 @@
 class Api::V1::LinksController < Api::V1::ApiBaseController
   def index
     if current_user
-      render json: current_user.links
+      if params[:by] || params[:sort]
+        render json: Link.sort_by_params(current_user, params[:by], params[:sort])
+      else
+        render json: current_user.links
+      end
     else
       render json: { errors: "Must be logged in" }, status: 422
     end
