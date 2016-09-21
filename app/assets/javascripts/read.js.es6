@@ -17,8 +17,6 @@ function getSortedLinksByTitle() {
     let target = $(e.target).parent()
     let sortParams = `?sort=${target.data('sort')}&by=title`
 
-    console.log(target.data())
-
     if (target.data('sort') === 'desc' || target.data('sort') === 'asc') {
       $('.link-row').remove()
       getLinks(target, sortParams)
