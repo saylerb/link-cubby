@@ -1,6 +1,6 @@
 <div class="container">
   <div class="row" id="form-container">
-    <div class="col-md-8">
+    <div class="col-md-6">
       <form class="form-inline" id="new-link">
         <div class="form-group">
           <label for="title-field">Title:</label>
@@ -10,9 +10,16 @@
           <label for="url-field">URL:</label>
           <input class="form-control" type="text" id="url-field" name="link[url]" placeholder="Enter URL!">
         </div>
-        <button type="submit" id="submit-link" class="btn btn-primary">Save Link</button>
+        <button type="submit" id="submit-link" class="btn btn-sm btn-primary">Save Link</button>
       </form>
     </div>
+    <div class="col-md-2">
+      <button data-read="true" type="button" class="read-filter btn btn-sm btn-default">Read</button>
+      <button data-read="false" type="button" class="read-filter btn btn-sm btn-default">Unread</button>
+      <button data-read="all" type="button" class="read-filter btn btn-sm btn-default">All</button>
+    </div>
+
+
     <%= render partial: 'shared/search' %>
   </div>
 </div>

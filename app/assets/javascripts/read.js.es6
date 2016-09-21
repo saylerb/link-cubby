@@ -13,24 +13,28 @@ function getLinks(target = false, sortParams = '') {
 function getSortedLinksByTitle() {
   $('#title-header').on('click', e => {
     e.preventDefault()
-    $('.link-row').remove()
 
     let target = $(e.target).parent()
     let sortParams = `?sort=${target.data('sort')}&by=title`
 
-    getLinks(target, sortParams)
+    if (target.data('sort') === 'desc' || target.data('sort') === 'asc') {
+      $('.link-row').remove()
+      getLinks(target, sortParams)
+    }
   })
 }
 
 function getSortedLinksByURL() {
   $('#url-header').on('click', e => {
     e.preventDefault()
-    $('.link-row').remove()
 
     let target = $(e.target).parent()
     let sortParams = `?sort=${target.data('sort')}&by=url`
 
-    getLinks(target, sortParams)
+    if (target.data('sort') === 'desc' || target.data('sort') === 'asc') {
+      $('.link-row').remove()
+      getLinks(target, sortParams)
+    }
   })
 }
 

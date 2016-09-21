@@ -8,5 +8,6 @@ $(document).ready(() => {
     search()
     getSortedLinksByTitle()
     getSortedLinksByURL()
+    filterRead()
   }())
 })
