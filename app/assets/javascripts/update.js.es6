@@ -7,7 +7,8 @@ function updateStatus() {
     let updateStatus =  currentStatus === "false" ? true : false
 
     let edit_data = { link: { read: updateStatus } }
-    updateRequest(target, edit_data, linkID)
+    let url = "/api/v1/links/" + linkID
+    updateRequest(target, url, edit_data, linkID, updateStatusActions)
   })
 }
 
@@ -17,15 +18,15 @@ function updateStatusActions(target, response) {
 }
 
 
-function updateRequest(target, edit_data, linkID, action) {
+function updateRequest(target, path, edit_data, linkID, action) {
 
   $.ajax({
-    url: "/api/v1/links/" + linkID,
+    url: path,
     type: "PATCH",
     dataType: "JSON",
     data: edit_data,
     success: response => {
-      updateStatusActions(target, response)
+      action(target, response)
     },
     error: error => {
       console.log(error)
