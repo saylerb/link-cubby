@@ -5,7 +5,7 @@ function clearFields() {
 
 function appendErrorRow(error) {
   if (($('.bg-danger').length) < 1 ) {
-    $("#table-body").prepend(`<tr class='bg-danger'><td colspan='4'>${error}</td></tr>`)
+    $("#table-body").prepend(`<tr class='bg-danger'><td colspan='5'>${error}</td></tr>`)
   }
 }
 

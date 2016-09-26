@@ -16,13 +16,21 @@
 
 @import "bootstrap-sprockets";
 @import "bootstrap";
-//
-//#flash { 
-//  padding: 50px;
-//}
-//
-//.msg {
-//  position: absolute;
-//  z-index: 999;
-//  width: 100%;
-//}
+
+#flash-container { 
+  padding: 50px;
+  position: relative;
+}
+
+#flash-message {
+  position: absolute;
+  height: 25%;
+  top: 25%;
+  right: 0px;
+  left: 25%;
+  width: 50%
+}
+
+#content {
+  padding-top: 15px;
+}

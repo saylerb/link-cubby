@@ -18,7 +18,7 @@ function updateStatusActions(target, response) {
 }
 
 function attributesSuccessActions(response) {
-  $('#flash').html(
+  $('#flash-message').html(
     `<div class='alert alert-success fade in' role='alert'>Updated successfully! 
        <a href='#' class='close' data-dismiss='alert' aria-label='close'>&times;</a>
      </div>`
