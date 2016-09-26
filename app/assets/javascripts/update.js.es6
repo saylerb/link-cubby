@@ -30,9 +30,11 @@ function attributesSuccessActions(response) {
 }
 
 function attributesErrorActions(error) {
+  let id = error.responseJSON.link.id
+
   appendErrorRow(error.responseJSON.errors)
-  $(titleID).text(error.responseJSON.link.title)
-  $(urlID).text(error.responseJSON.link.url)
+  $(`#title-${id}`).text(error.responseJSON.link.title)
+  $(`#url-${id}`).text(error.responseJSON.link.url)
 }
 
 function updateRequest(target, path, edit_data, linkID, successAction) {

@@ -73,29 +73,51 @@ RSpec.feature "update link attributes", js: true do
     end
   end
 
-  #context "with invalid input" do
-  #  scenario "user should not be able to update url with invalid url" do
-  #    user = create_and_authenticate_user
-  #    link = create(:link, title: "original title", url: "https://www.google.com/", user: user)
+  context "with invalid input" do
+    scenario "user should not be able to update title with invalid title" do
+      user = create_and_authenticate_user
+      link = create(:link, title: "original title", url: "https://www.google.com/", user: user)
 
-  #    visit root_path
+      visit root_path
 
-  #    expect(Link.find(link.id).title).to eq("original title")
+      expect(Link.find(link.id).title).to eq("original title")
 
-  #    within "#link-#{link.id}" do
-  #      expect(page).to have_content("https://www.google.com/")
+      within "#link-#{link.id}" do
+        expect(page).to have_content("https://www.google.com/")
 
-  #      page.execute_script("$('#url-#{link.id}').focus()")
-  #      page.execute_script("$('#url-#{link.id}').html('INVALID-URL')")
-  #      page.execute_script("$('#url-#{link.id}').blur()")
-  #      page.execute_script("$('body').click()")
-  #    end
+        page.execute_script("$('#title-#{link.id}').focus()")
+        page.execute_script("$('#title-#{link.id}').html('')") # try to delete title
+        page.execute_script("$('#title-#{link.id}').blur()")
+      end
 
-  #    expect(page).to_not have_content("INVALID-URL")
-  #    expect(page).to_not have_content("Updated Successfully!")
-  #    expect(page).to have_content("Url is not a valid URL")
-  #    expect(page).to have_content("http://www.google.com/")
-  #    expect(Link.find(link.id).url).to eq("https://www.google.com")
-  #  end
-  #end
+      expect(page).to_not have_content("Updated Successfully!")
+      expect(page).to have_content("Title can't be blank")
+      expect(page).to have_content("https://www.google.com/")
+      expect(Link.find(link.id).url).to eq("https://www.google.com/")
+    end
+
+    scenario "user should not be able to update url with invalid url" do
+      user = create_and_authenticate_user
+      link = create(:link, title: "original title", url: "https://www.google.com/", user: user)
+
+      visit root_path
+
+      expect(Link.find(link.id).title).to eq("original title")
+
+      within "#link-#{link.id}" do
+        expect(page).to have_content("https://www.google.com/")
+
+        page.execute_script("$('#url-#{link.id}').focus()")
+        page.execute_script("$('#url-#{link.id}').html('INVALID-URL')")
+
+        page.execute_script("$('#url-#{link.id}').blur()")
+      end
+
+      expect(page).to_not have_content("INVALID-URL")
+      expect(page).to_not have_content("Updated Successfully!")
+      expect(page).to have_content("Url is not a valid URL")
+      expect(page).to have_content("https://www.google.com/")
+      expect(Link.find(link.id).url).to eq("https://www.google.com/")
+    end
+  end
 end
