@@ -4,6 +4,7 @@ function getLinks(target = false, sortParams = '') {
   fetch(request)
     .then(response => response.json())
     .then(response => {
+      $('.link-row').remove()
       response.forEach(link => appendRow(link))
       handleChevrons(target)
      })
@@ -18,7 +19,6 @@ function getSortedLinksByTitle() {
     let sortParams = `?sort=${target.data('sort')}&by=title`
 
     if (target.data('sort') === 'desc' || target.data('sort') === 'asc') {
-      $('.link-row').remove()
       getLinks(target, sortParams)
     }
   })
@@ -32,7 +32,6 @@ function getSortedLinksByURL() {
     let sortParams = `?sort=${target.data('sort')}&by=url`
 
     if (target.data('sort') === 'desc' || target.data('sort') === 'asc') {
-      $('.link-row').remove()
       getLinks(target, sortParams)
     }
   })
