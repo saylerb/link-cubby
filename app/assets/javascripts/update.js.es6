@@ -17,20 +17,32 @@ function updateStatusActions(target, response) {
   clearFields()
 }
 
+function attributesSuccessActions(response) {
+  $('#flash').html(
+    `<div class='alert alert-success fade in' role='alert'>Updated successfully! 
+       <a href='#' class='close' data-dismiss='alert' aria-label='close'>&times;</a>
+     </div>`
+   )
 
-function updateRequest(target, path, edit_data, linkID, action) {
+  $(titleID).text(response.title)
+  $(urlID).text(response.url)
+  $('.bg-danger').remove()
+}
 
+function attributesErrorActions(error) {
+  appendErrorRow(error.responseJSON.errors)
+  $(titleID).text(error.responseJSON.link.title)
+  $(urlID).text(error.responseJSON.link.url)
+}
+
+function updateRequest(target, path, edit_data, linkID, successAction) {
   $.ajax({
     url: path,
     type: "PATCH",
     dataType: "JSON",
     data: edit_data,
-    success: response => {
-      action(target, response)
-    },
-    error: error => {
-      console.log(error)
-    }
+    success: response => successAction(target, response),
+    error: error => console.log(error),
   })
 }
 
@@ -49,16 +61,8 @@ function updateLinkAttributes() {
       type: "PATCH",
       dataType: "JSON",
       data: edit_data,
-      success: response => {
-        $(titleID).text(response.title)
-        $(urlID).text(response.url)
-        $('.bg-danger').remove()
-      },
-      error: error => {
-        appendErrorRow(error.responseJSON.errors)
-        $(titleID).text(error.responseJSON.link.title)
-        $(urlID).text(error.responseJSON.link.url)
-      }
+      success: response => attributesSuccessActions(response),
+      error: error => attributesErrorActions(error),
     })
   })
 }
