@@ -8,63 +8,63 @@ function updateStatus() {
 
     let edit_data = { link: { read: updateStatus } }
     let url = "/api/v1/links/" + linkID
-    updateRequest(target, url, edit_data, linkID, updateStatusActions)
+    updateRequest(edit_data, linkID, updateStatusActions, e => console.log(e.responseText))
   })
 }
 
-function updateStatusActions(target, response) {
-  toggleReadText(target, response.read)
+function updateStatusActions(linkID, response) {
+  toggleReadText(linkID, response.read)
   clearFields()
 }
 
-function attributesSuccessActions(response) {
+function attributesSuccessActions(linkID, response) {
   $('#flash-message').html(
     `<div class='alert alert-success fade in' role='alert'>Updated successfully! 
        <a href='#' class='close' data-dismiss='alert' aria-label='close'>&times;</a>
      </div>`
    )
 
-  $(titleID).text(response.title)
-  $(urlID).text(response.url)
+  $(`title-${linkID}`).text(response.title)
+  $(`url-${linkID}`).text(response.url)
   $('.bg-danger').remove()
 }
 
 function attributesErrorActions(error) {
-  let id = error.responseJSON.link.id
+  let errorRes = error.responseJSON 
+  let linkID = errorRes.link.id
 
-  appendErrorRow(error.responseJSON.errors)
-  $(`#title-${id}`).text(error.responseJSON.link.title)
-  $(`#url-${id}`).text(error.responseJSON.link.url)
-}
-
-function updateRequest(target, path, edit_data, linkID, successAction) {
-  $.ajax({
-    url: path,
-    type: "PATCH",
-    dataType: "JSON",
-    data: edit_data,
-    success: response => successAction(target, response),
-    error: error => console.log(error),
-  })
+  appendErrorRow(errorRes.errors)
+  $(`#title-${linkID}`).text(errorRes.link.title)
+  $(`#url-${linkID}`).text(errorRes.link.url)
 }
 
 function updateLinkAttributes() {
   $("#links-table").on('blur', '.input', e => {
-    let linkID = e.currentTarget.id
-    let num = linkID.replace(/^\D+/g, "")
+    let linkID = e.currentTarget.id.replace(/^\D+/g, "")
 
-    let titleID = "#title-" + num
-    let urlID = "#url-" + num
-
-    let edit_data = { link: { title: $(titleID).text(), url: $(urlID).text() } }
-
-    $.ajax({
-      url: "/api/v1/links/" + num,
-      type: "PATCH",
-      dataType: "JSON",
-      data: edit_data,
-      success: response => attributesSuccessActions(response),
-      error: error => attributesErrorActions(error),
-    })
+    updateRequest(
+      packageLinkData(linkID), 
+      linkID, 
+      attributesSuccessActions, 
+      attributesErrorActions
+    )
   })
+}
+
+function updateRequest(edit_data, linkID, successAction, errorAction) {
+  $.ajax({
+    url: `/api/v1/links/${linkID}`,
+    type: "PATCH",
+    dataType: "JSON",
+    data: edit_data,
+    success: response => successAction(linkID, response),
+    error: error => errorAction(error)
+  })
+}
+
+function packageLinkData(linkID) {
+  let titleText = $(`#title-${linkID}`).text()
+  let urlText = $(`#url-${linkID}`).text()
+
+  return { link: { title: titleText, url: urlText } }
 }
