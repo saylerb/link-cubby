@@ -4,7 +4,7 @@ function updateStatus() {
     let currentStatus = $(e.currentTarget).parent().prev().text()
 
     updateRequest(
-      packageStatusUpdate(currentStatus),
+      statusPayload(currentStatus),
       linkID,
       updateStatusActions,
       err => console.log(err.responseText)
@@ -29,8 +29,7 @@ function attributesSuccessActions(linkID, response) {
   $('.bg-danger').remove()
 }
 
-function attributesErrorActions(error) {
-  let errorRes = error.responseJSON 
+function attributesErrorActions(errorRes) {
   let linkID = errorRes.link.id
 
   appendErrorRow(errorRes.errors)
@@ -43,7 +42,7 @@ function updateLinkAttributes() {
     let linkID = e.currentTarget.id.replace(/^\D+/g, "")
 
     updateRequest(
-      packageLinkData(linkID), 
+      linkPayload(linkID),
       linkID, 
       attributesSuccessActions, 
       attributesErrorActions
@@ -51,25 +50,31 @@ function updateLinkAttributes() {
   })
 }
 
-function updateRequest(edit_data, linkID, successAction, errorAction) {
-  $.ajax({
-    url: `/api/v1/links/${linkID}`,
-    type: "PATCH",
-    dataType: "JSON",
-    data: edit_data,
-    success: response => successAction(linkID, response),
-    error: error => errorAction(error)
-  })
-}
-
-function packageStatusUpdate(currentStatus) {
+function statusPayload(currentStatus) {
   let updateStatus =  currentStatus === "false" ? true : false
   return { link: { read: updateStatus } }
 }
 
-function packageLinkData(linkID) {
+function linkPayload(linkID) {
   let titleText = $(`#title-${linkID}`).text()
   let urlText = $(`#url-${linkID}`).text()
 
   return { link: { title: titleText, url: urlText } }
+}
+
+function updateRequest(payload, linkID, successAction, errorAction) {
+
+  let request = new Request(`/api/v1/links/${linkID}`,
+    { method: 'PATCH',
+      headers: { 'Content-Type': 'application/json' },
+      credentials: 'same-origin',
+      body: JSON.stringify(payload)
+    })
+
+  fetch(request)
+    .then(response => {
+      response.json()
+        .then(json => response.ok ? successAction(linkID, json) : errorAction(json))
+    })
+    .catch(error => console.log(error))
 }
