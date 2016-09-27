@@ -1,14 +1,14 @@
 function updateStatus() {
   $("#links-table").on('click', '.update-status', e => {
-    let target = e.currentTarget
-    let linkID = $(target).parent()[0].id.replace(/^\D+/g, "")
+    let linkID = $(e.currentTarget).parents(':first').attr('id').replace(/^\D+/g, "")
+    let currentStatus = $(e.currentTarget).parent().prev().text()
 
-    let currentStatus = $(target).parent().prev()[0].innerText
-    let updateStatus =  currentStatus === "false" ? true : false
-
-    let edit_data = { link: { read: updateStatus } }
-    let url = "/api/v1/links/" + linkID
-    updateRequest(edit_data, linkID, updateStatusActions, e => console.log(e.responseText))
+    updateRequest(
+      packageStatusUpdate(currentStatus),
+      linkID,
+      updateStatusActions,
+      err => console.log(err.responseText)
+    )
   })
 }
 
@@ -60,6 +60,11 @@ function updateRequest(edit_data, linkID, successAction, errorAction) {
     success: response => successAction(linkID, response),
     error: error => errorAction(error)
   })
+}
+
+function packageStatusUpdate(currentStatus) {
+  let updateStatus =  currentStatus === "false" ? true : false
+  return { link: { read: updateStatus } }
 }
 
 function packageLinkData(linkID) {
