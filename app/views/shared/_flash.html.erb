@@ -1,5 +1,7 @@
-<div class="container">
-  <% flash.each do |type, message| %>
-    <div class="alert alert-<%= type %>" role="alert"><%= sanitize(message) %></div>
-  <% end %>
+<div id="flash-container" class="container">
+  <div id="flash-message">
+    <% flash.each do |type, message| %>
+      <div class="alert alert-<%= type %>" role="alert"><%= sanitize(message) %></div>
+    <% end %>
+  </div>
 </div>
