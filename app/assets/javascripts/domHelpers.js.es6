@@ -5,7 +5,7 @@ function clearFields() {
 
 function appendErrorRow(error) {
   if (($('.bg-danger').length) < 1 ) {
-    $("#table-body").prepend(`<tr class='bg-danger'><td colspan='4'>${error}</td></tr>`)
+    $("#table-body").prepend(`<tr class='bg-danger'><td colspan='5'>${error}</td></tr>`)
   }
 }
 
@@ -32,10 +32,10 @@ function removeRow(link_id) {
   $(`#link-${link_id}`).remove()
 }
 
-function toggleReadText(target, status) {
-  $(target).parent().prev().text(status)
-  $(target).text(toggleButtonText(status))
-  $(target).parent().parent().toggleClass('bg-success')
+function toggleReadText(linkID, status) {
+  $(`#read-${linkID}`).text(status)
+  $(`#update-status-${linkID}`).children(':first').text(toggleButtonText(status))
+  $(`#link-${linkID}`).toggleClass('bg-success')
 }
 
 function toggleButtonText(status) {
