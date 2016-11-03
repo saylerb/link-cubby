@@ -1,4 +1,4 @@
-# Link Cubby (aka ThoughtBox)
+# Link Cubby
 
 #### Store all your links. 
 
@@ -8,9 +8,7 @@
 
 ### Description
 
-This is part of assessment for module 4 students at Turing School. The goal is to implement a CRUD
-Rails app with authentication and responsive Javascript. This app uses Javascript and jQuery on the frontend,
-with a Rails API serving up the content on the backend.
+A CRUD Rails app with authentication and responsive Javascript. This app uses Javascript and jQuery on the frontend, with a Rails API serving up the content on the backend. 
 
 ### Usage
 
