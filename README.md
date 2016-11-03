@@ -12,6 +12,9 @@ A CRUD Rails app with authentication and responsive Javascript. This app uses Ja
 
 ### Usage
 
+* Create a new account by entering an email address and password. Once logged in, you'll 
+  be redirected to the links index page.
+  
 * Create new links: Add a new link to the list by using the form in the upper left hand
   corner.
 
@@ -25,9 +28,9 @@ A CRUD Rails app with authentication and responsive Javascript. This app uses Ja
 
 ### Installation
 
-1. `git clone git@github.com:saylerb/thought-box.git`
+1. `git@github.com:saylerb/link-cubby.git`
 
-1. `cd thought-box`
+1. `cd link-cubby`
 
 1. `bundle install`
 
