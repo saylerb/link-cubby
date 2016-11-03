@@ -28,7 +28,7 @@ A CRUD Rails app with authentication and responsive Javascript. This app uses Ja
 
 ### Installation
 
-1. `git@github.com:saylerb/link-cubby.git`
+1. `git clone git@github.com:saylerb/link-cubby.git`
 
 1. `cd link-cubby`
 
